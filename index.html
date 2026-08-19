@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offline Social — Modo Foco para Android</title>
+<meta name="description" content="Offline Social bloqueia o tráfego de apps selecionados com uma VPN local, sem apagar dados e sem coletar nada seu.">
+<style>
+  :root{
+    --bg: #0B1220;
+    --bg-soft: #121B2E;
+    --line: #1F2C42;
+    --text: #EAF0FB;
+    --text-dim: #8CA0C2;
+    --accent: #F5A623;
+    --accent-dim: #7A5518;
+    --focus-ring: #F5A623;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height:1.6;
+  }
+  a{color:var(--accent);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--focus-ring); outline-offset:3px;}
+
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+
+  header.nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 24px; border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:0.2px;}
+  .brand .dot{width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 14px var(--accent);}
+  nav.links{display:flex; gap:24px; font-size:14px;}
+  nav.links a{color:var(--text-dim); text-decoration:none;}
+  nav.links a:hover{color:var(--text);}
+
+  .hero{
+    padding:96px 0 72px;
+    text-align:left;
+    border-bottom:1px solid var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  .eyebrow{
+    font-size:13px; text-transform:uppercase; letter-spacing:2.5px;
+    color:var(--accent); font-weight:600; margin-bottom:18px;
+  }
+  h1{
+    font-size:clamp(34px, 6vw, 58px);
+    line-height:1.05;
+    margin:0 0 22px;
+    font-weight:800;
+    letter-spacing:-0.5px;
+    max-width:760px;
+  }
+  h1 .soft{color:var(--text-dim); font-weight:500;}
+  .lede{
+    font-size:18px; color:var(--text-dim); max-width:520px; margin:0 0 34px;
+  }
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 22px; border-radius:10px; font-weight:600; font-size:15px;
+    text-decoration:none; border:1px solid transparent; transition: transform .15s ease, opacity .15s ease;
+  }
+  .btn:hover{transform: translateY(-1px);}
+  .btn-primary{background:var(--accent); color:#1A1200;}
+  .btn-ghost{border-color:var(--line); color:var(--text);}
+
+  .dial{
+    position:absolute; right:-60px; top:40px;
+    width:320px; height:320px; border-radius:50%;
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0.9;
+  }
+  .dial::before{
+    content:"";
+    position:absolute; inset:22px;
+    border-radius:50%;
+    border:1px dashed var(--line);
+  }
+  .dial-core{
+    width:150px; height:150px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, rgba(245,166,35,0.18), transparent 65%);
+    border:1px solid var(--accent-dim);
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; color:var(--text-dim); text-align:center; padding:14px;
+  }
+  @media (max-width: 860px){ .dial{display:none;} }
+
+  section{padding:72px 0; border-bottom:1px solid var(--line);}
+  .kicker{font-size:13px; text-transform:uppercase; letter-spacing:2px; color:var(--text-dim); margin-bottom:10px;}
+  h2{font-size:28px; margin:0 0 34px; letter-spacing:-0.3px;}
+
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  @media (max-width: 720px){ .grid3{grid-template-columns:1fr;} }
+  .card{
+    background:var(--bg-soft); border:1px solid var(--line); border-radius:14px;
+    padding:24px;
+  }
+  .card .n{font-size:13px; color:var(--accent); font-weight:700; margin-bottom:12px;}
+  .card h3{margin:0 0 10px; font-size:17px;}
+  .card p{margin:0; color:var(--text-dim); font-size:14.5px;}
+
+  .policy h2{margin-bottom:8px;}
+  .policy .updated{color:var(--text-dim); font-size:13px; margin-bottom:36px;}
+  .policy h3{font-size:16px; margin:30px 0 8px; color:var(--text);}
+  .policy p, .policy li{color:var(--text-dim); font-size:15px;}
+  .policy ul{padding-left:20px;}
+
+  footer{padding:40px 0; text-align:center; color:var(--text-dim); font-size:13px;}
+  footer a{color:var(--text-dim); text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; width:100%;">
+    <div class="brand"><span class="dot"></span> Offline Social</div>
+    <nav class="links">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#privacidade">Privacidade</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="dial"><div class="dial-core">Modo Foco<br>ativo</div></div>
+    <div class="eyebrow">Android · Foco digital</div>
+    <h1>Silencia as redes sociais.<br><span class="soft">Sem apagar nada.</span></h1>
+    <p class="lede">O Offline Social usa uma VPN local no seu aparelho pra cortar o tráfego só dos apps que você escolher — o app continua instalado, os dados continuam lá, só a distração some enquanto você quiser.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.seu.projeto.whatsappoffline">Baixar na Play Store</a>
+      <a class="btn btn-ghost" href="#como-funciona">Ver como funciona</a>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona">
+  <div class="wrap">
+    <div class="kicker">Como funciona</div>
+    <h2>Três decisões, não um interruptor genérico</h2>
+    <div class="grid3">
+      <div class="card">
+        <div class="n">Escolha</div>
+        <h3>Você escolhe o que fica offline</h3>
+        <p>O app identifica automaticamente redes sociais, mensageria e vídeo instalados no aparelho. Você marca só o que quer silenciar.</p>
+      </div>
+      <div class="card">
+        <div class="n">Filtro</div>
+        <h3>Tráfego local, sem servidor externo</h3>
+        <p>Uma VPN roda dentro do próprio aparelho e barra só os pacotes dos apps marcados. Nada passa por um servidor nosso — nada sai do seu celular.</p>
+      </div>
+      <div class="card">
+        <div class="n">Horário</div>
+        <h3>Liga e desliga sozinho</h3>
+        <p>Programe janelas de foco por horário e dia da semana, ou ative manualmente quando precisar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="privacidade" class="policy">
+  <div class="wrap">
+    <div class="kicker">Legal</div>
+    <h2>Política de Privacidade</h2>
+    <p class="updated">Última atualização: agosto de 2026</p>
+
+    <p>O Offline Social ("o app") é desenvolvido por Miele Soares de Jesus Junior. Esta política explica o que o app faz e não faz com dados do seu aparelho.</p>
+
+    <h3>O que o app não faz</h3>
+    <ul>
+      <li>Não envia o conteúdo do seu tráfego de internet para nenhum servidor.</li>
+      <li>Não lê, armazena ou compartilha mensagens, contatos, fotos ou qualquer conteúdo dos apps bloqueados.</li>
+      <li>Não altera configurações de DNS do aparelho.</li>
+    </ul>
+
+    <h3>Como a VPN local funciona</h3>
+    <p>O app usa a API padrão do Android (<em>VpnService</em>) para criar um túnel local que existe apenas dentro do próprio aparelho. Esse túnel serve só para decidir, por aplicativo, se o tráfego passa ou é descartado — o app não intercepta, inspeciona nem retransmite o conteúdo desse tráfego para lugar nenhum.</p>
+
+    <h3>Dados armazenados no aparelho</h3>
+    <ul>
+      <li>Lista de aplicativos que você selecionou para bloquear (guardada localmente).</li>
+      <li>Status da sua licença Premium, quando aplicável, para validar a compra feita via Google Play.</li>
+    </ul>
+
+    <h3>Anúncios</h3>
+    <p>Na versão gratuita, o app pode exibir anúncios em vídeo fornecidos pelo Google AdMob para liberar o uso de determinadas funções. O AdMob pode coletar identificadores de publicidade conforme a política de privacidade do próprio Google, disponível em <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</p>
+
+    <h3>Compras e assinaturas</h3>
+    <p>Assinaturas Premium são processadas integralmente pelo Google Play Billing. O app não tem acesso a dados de cartão ou pagamento — isso é gerenciado inteiramente pela sua conta Google.</p>
+
+    <h3>Contato</h3>
+    <p id="contato">Dúvidas sobre esta política: <a href="mailto:SEU_EMAIL_AQUI@gmail.com">SEU_EMAIL_AQUI@gmail.com</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Offline Social — feito no Brasil. <a href="#privacidade">Política de Privacidade</a>
+  </div>
+</footer>
+
+</body>
+</html>
